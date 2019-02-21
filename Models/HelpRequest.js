@@ -8,10 +8,10 @@ const HelpRequestSchema = new Schema({
         required: true,
     },
 
-    user_id: [{
+    user_id: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }]
+    }
 }, {
     timestamps: {
         createdAt: 'created_at',

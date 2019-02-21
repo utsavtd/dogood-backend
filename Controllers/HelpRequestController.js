@@ -7,24 +7,23 @@ const moment = require('moment');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const User = require('../Models/User')
+const HelpRequest = require('../Models/HelpRequest')
 
 exports.create = [
     check('type', 'Please enter type').isString().isLength(2),
-    check('user_id', 'Please enter valid user_id').isString().isLength(5).isEmail().custom(async (value) => {
-        let user = await User.findOne({
-            email: value
-        })
-        if (user) {
-            return Promise.reject("User already registered")
-        }
-    }),
-    check('password', 'Please enter valid password').isString().isLength(5),
+    // check('user_id', 'Please enter valid user_id').isString().isLength(5).custom(async (value) => {
+    //     let user = await User.findOne({
+    //         email: value
+    //     })
+    //     if (user) {
+    //         return Promise.reject("User already registered")
+    //     }
+    // }),
 
     async (req, res, next) => {
         try {
 
-            console.log('signUp@UserController')
+            console.log('create@helprequestcontroller')
 
             const errors = validationResult(req)
 
@@ -34,9 +33,9 @@ exports.create = [
                     payload: errors.array()
                 })
             }
-            let user = await User.create(req.body)
-            if (user) {
-                return res.json(user)
+            let help = await HelpRequest.create(req.body)
+            if (help) {
+                return res.json(help)
             }
         } catch (e) {
             console.log(e)
@@ -49,31 +48,10 @@ exports.create = [
     }
 ]
 
-exports.list = [
-    check('email', 'Please enter email').isString().isLength(4),
-    check('password', 'Please enter passwprd').isString().isLength(5),
-    check('type', 'Please choose user type ').isString().isLength(4),
+exports.list = 
     async (req, res, next) => {
-        console.log(req.body)
-        let user = await User.findOne({
-            email: req.body.email,
-            type: req.body.type
-        })
-        if (!user) {
-            return res.status(401).json({
-                message: "Invalid login"
-            })
-        }
-        if (bcrypt.compareSync(req.body.password, user.password)) {
-            return res.json({
-                message: 'OK',
-                payload: user
-            })
-        }
-
-        return res.status(401).json({
-            message: "Invalid login"
-        })
+       let help=await HelpRequest.findOne({}).populate('user_id')
+       console.log(help)
+        return res.json(help)
 
     }
-]
