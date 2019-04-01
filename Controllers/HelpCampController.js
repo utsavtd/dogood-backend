@@ -7,23 +7,17 @@ const moment = require('moment');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const HelpRequest = require('../Models/HelpRequest')
+const HelpCamp = require('../Models/HelpCamp')
 
 exports.create = [
-    check('type', 'Please enter type').isString().isLength(2),
-    // check('user_id', 'Please enter valid user_id').isString().isLength(5).custom(async (value) => {
-    //     let user = await User.findOne({
-    //         email: value
-    //     })
-    //     if (user) {
-    //         return Promise.reject("User already registered")
-    //     }
-    // }),
+    check('name', 'Please enter type').isString().isLength(2),
+    check('description', 'Please enter type').isString().isLength(2),
+    check('address', 'Please enter type').isString().isLength(2),
 
     async (req, res, next) => {
         try {
 
-            console.log('create@helprequestcontroller')
+            console.log('create@HelpCampcontroller')
 
             const errors = validationResult(req)
 
@@ -33,7 +27,7 @@ exports.create = [
                     payload: errors.array()
                 })
             }
-            let help = await HelpRequest.create(req.body)
+            let help = await HelpCamp.create(req.body)
             if (help) {
                 return res.json(help)
             }
@@ -50,7 +44,7 @@ exports.create = [
 
 exports.list = 
     async (req, res, next) => {
-       let help=await HelpRequest.find({}).populate('user_id')
+       let help=await HelpCamp.find({})
        console.log(help)
         return res.json(help)
 
