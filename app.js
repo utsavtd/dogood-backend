@@ -10,6 +10,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const helprequests = require('./routes/helprequest');
 const helpcamps = require('./routes/helpcamp');
+const notification = require('./routes/notification');
+
 
 const app = express();
 app.use(cors())
@@ -28,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/helprequests', helprequests);
 app.use('/helpcamp', helpcamps);
+app.use('/notification', notification);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
