@@ -43,7 +43,6 @@ exports.create = [
 exports.list = 
     async (req, res, next) => {
        let help=await Notification.find({})
-       console.log(help)
         return res.json(help)
 
     }
