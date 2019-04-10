@@ -7,6 +7,10 @@ const HelpRequestSchema = new Schema({
         type: String,
         required: true,
     },
+    address: {
+        type: String,
+        required: true,
+    },
 
     user_id: {
         type: Schema.Types.ObjectId,

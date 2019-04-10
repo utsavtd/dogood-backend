@@ -11,6 +11,7 @@ const HelpRequest = require('../Models/HelpRequest')
 
 exports.create = [
     check('type', 'Please enter type').isString().isLength(2),
+    check('address', 'Please enter address').isString().isLength(2),
     // check('user_id', 'Please enter valid user_id').isString().isLength(5).custom(async (value) => {
     //     let user = await User.findOne({
     //         email: value
@@ -28,6 +29,7 @@ exports.create = [
             const errors = validationResult(req)
 
             if (!errors.isEmpty()) {
+                console.log(errors.array())
                 return res.status(422).json({
                     message: "Invalid fields",
                     payload: errors.array()
